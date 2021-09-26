@@ -70,17 +70,17 @@ while True:
         if mar<0.0040:
             is_smiling = 1
             blink_count+=blink_count_speed
-            cv2.putText(bg, "Keep Smiling!", (470, 360),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+            cv2.putText(bg, "Keep Smiling!", (470, 360+(i*40)),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         else:
             is_smiling = 0
-            cv2.putText(bg, "Please Smile", (470, 360),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+            cv2.putText(bg, "Please Smile", (470, 360+(i*40)),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         
         if is_smiling==1:
             blink_count_speed+=0.01
         else:
             blink_count_speed = 1
-        if blink_count_speed>=1.5:
-            cv2.putText(bg, "Wow!Bonus for Smiling!:{}x".format(blink_count_speed), (470, 400),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2) 
+    if blink_count_speed>=1.5:
+            cv2.putText(bg, "Wow!Bonus for Smiling!:{}x".format(blink_count_speed), (470, 400+(i*40)),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2) 
     
     
     # Show the image
