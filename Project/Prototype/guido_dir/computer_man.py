@@ -1,8 +1,7 @@
 import cv2
-
+import numpy
 class Computer_Man:
-    
-    def __init__(self, x0=0, y0=0, scale = 1.0, graph = {
+    def __init__(self, x0=0, y0=0, scale = 1, monitor_width = 1920,monitor_height = 1080-80,graph = {
             0 : [17,3,36,48,31],
             3 : [0, 7,48,58],
             7 : [3,9,57,58],
@@ -40,20 +39,32 @@ class Computer_Man:
             67: [48,57,58]
     }):
         self.x0 = x0
-        self.y0 = y0
+        self.y0 = -y0#cause in right + , down +, we start from down
         self.scale = scale
         self.graph = graph
+        self.monitor_height = monitor_height
+        self.monitor_width = monitor_width
 
     def draw_man(self, image, shape, colors=[
                                     (112,25,25),
                                     (255,0,0)
                                     ]):
         j=0
-        for point in self.graph:
+        # move in left down corner
+        # will mv to (0,0) by moving x from 1 and y from 9
+        x_to_zero,y_tmp = shape[0]
+        x_tmp, y_to_zero = shape[8]
+        parallax_to_zero = numpy.array([x_to_zero,y_to_zero-self.monitor_height],dtype=numpy.int32)
+        
+        # parallax from x0, y0
+        parallax = numpy.array([self.x0,self.y0],dtype=numpy.int32)
+        for point in self.graph:            
             # draw circles
-            cv2.circle(image, shape[point], 1, colors[j%len(colors)], -1)
+            result_point_coordinates = (shape[point]-parallax_to_zero)+parallax 
+            cv2.circle(image, result_point_coordinates, 1, colors[j%len(colors)], -1)
             for edges in self.graph[point]:
                 # draw lines between circles 
                 if(point<edges):
-                    cv2.line(image, shape[point],shape[edges],colors[j%len(colors)])
+                    result_edges_coordinates = (shape[edges]-parallax_to_zero)+parallax
+                    cv2.line(image, result_point_coordinates, result_edges_coordinates,colors[j%len(colors)])
                     j = j+1
