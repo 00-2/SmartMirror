@@ -8,6 +8,7 @@ import numpy
 
 
 path = Path().absolute().parent #path to Prototype
+
 if (str(path.name) == 'Project'):
     path = path.joinpath('Prototype')
 
@@ -81,18 +82,16 @@ while True:
         
         j=0
         for point in graph:
+            cv2.circle(bg, shape[point], 1, colors[j%len(colors)], -1)
             for edges in graph[point]:
                 if(point<edges):
                     cv2.line(bg, shape[point],shape[edges],colors[j%len(colors)])
                     j = j+1
-
-        
-        
-
-
     # Show the image
     cv2.imshow("Output", bg)
     
+
+
     k = cv2.waitKey(5) & 0xFF
     if k == 27:
         break
