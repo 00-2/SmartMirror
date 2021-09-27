@@ -1,12 +1,20 @@
+from os import name
 from imutils import face_utils
 import dlib
 import cv2
 import matplotlib.pyplot as plt
 from scipy.spatial import distance as dist
+from pathlib import Path
 
-p = "shape_predictor_68_face_landmarks.dat"
+
+path = Path().absolute().parent #path to Prototype
+if (str(path.name) == 'Project'):
+    path = path.joinpath('Prototype')
+
+path = str(path.joinpath('predictors/shape_predictor_68_face_landmarks.dat')) #path to shape_predictor
+
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(p)
+predictor = dlib.shape_predictor(path)
 
 def eye_aspect_ratio(eye):
     A = dist.euclidean(eye[1], eye[5])
