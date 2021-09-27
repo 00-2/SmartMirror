@@ -6,12 +6,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance as dist
 from pathlib import Path
 
-
-path = Path().absolute().parent #path to Prototype
-if (str(path.name) == 'Project'):
-    path = path.joinpath('Prototype')
-
-path = str(path.joinpath('predictors/shape_predictor_68_face_landmarks.dat')) #path to shape_predictor
+path = '../predictors/shape_predictor_68_face_landmarks.dat' #path to shape_predictor
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(path)
@@ -41,7 +36,7 @@ while True:
     # Get faces into webcam's image
     rects = detector(gray, 0)
     
-    bg = cv2.imread("background.png")
+    bg = cv2.imread("../add_data_dir/background.png")
     # For each detected face, find the landmark.
     for (i, rect) in enumerate(rects):
         # Make the prediction and transfom it to numpy array
