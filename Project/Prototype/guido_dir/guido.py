@@ -16,30 +16,7 @@ path = str(path.joinpath('predictors/shape_predictor_68_face_landmarks.dat')) #p
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(path)
 
-cap = cv2.VideoCapture(0)
-while True:
-    bg = cv2.imread("background_black.jpg")
-    # Getting out image by webcam 
-    _, image = cap.read()
-    # Converting the image to gray scale
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        
-    # Get faces into webcam's image
-    rects = detector(gray, 0)
-    
-    # For each detected face, find the landmark.
-    for (i, rect) in enumerate(rects):
-        # Make the prediction and transfom it to numpy array
-        shape = predictor(gray, rect)
-        shape = face_utils.shape_to_np(shape)
-	    # loop over the (x, y)-coordinates for the facial landmarks
-	    # and draw them on the image
-        #for (x, y) in shape:
-            #cv2.circle(bg, (x, y), 2, (238, 95, 26), -1)
-        # making lines between some circles
-        # lines from 1
-        
-        graph = { 
+graph = { 
             0 : [17,3,36,48,31],
             3 : [0, 7,48,58],
             7 : [3,9,57,58],
@@ -77,7 +54,30 @@ while True:
             67: [48,57,58]
         }
         
-        colors = [(112,25,25), (255,0,0)]
+colors = [(112,25,25), (255,0,0)]
+
+cap = cv2.VideoCapture(0)
+while True:
+    bg = cv2.imread("background_black.jpg")
+    # Getting out image by webcam 
+    _, image = cap.read()
+    # Converting the image to gray scale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+    # Get faces into webcam's image
+    rects = detector(gray, 0)
+    
+    # For each detected face, find the landmark.
+    for (i, rect) in enumerate(rects):
+        # Make the prediction and transfom it to numpy array
+        shape = predictor(gray, rect)
+        shape = face_utils.shape_to_np(shape)
+	    # loop over the (x, y)-coordinates for the facial landmarks
+	    # and draw them on the image
+        #for (x, y) in shape:
+            #cv2.circle(bg, (x, y), 2, (238, 95, 26), -1)
+        # making lines between some circles
+        # lines from 1
         
         j=0
         for point in graph:
