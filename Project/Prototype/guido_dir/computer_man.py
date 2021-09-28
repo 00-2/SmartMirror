@@ -1,7 +1,8 @@
 import cv2
 import numpy
-class Computer_Man:
-    def __init__(self, x0=0, y0=0, scale = 1, monitor_width = 1920,monitor_height = 1080-80,graph = {
+from frame import Frame
+class Computer_Man(Frame):
+    def __init__(self,x0=0,y0=0, scale = 1,graph = {
             0 : [17,3,36,48,31],
             3 : [0, 7,48,58],
             7 : [3,9,57,58],
@@ -38,12 +39,11 @@ class Computer_Man:
             65: [54,56,57],
             67: [48,57,58]
     }):
+        Frame.__init__(self)
         self.x0 = x0
-        self.y0 = -y0#cause in right + , down +, we start from down
+        self.y0 = -y0#cause in right + , down +, we starts from down
         self.scale = scale
         self.graph = graph
-        self.monitor_height = monitor_height
-        self.monitor_width = monitor_width
 
     def draw_man(self, image, shape, colors=[
                                     (112,25,25),
