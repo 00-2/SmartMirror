@@ -68,3 +68,6 @@ class Computer_Man(Frame):
                     result_edges_coordinates = (shape[edges]-parallax_to_zero)+parallax
                     cv2.line(image, result_point_coordinates, result_edges_coordinates,colors[j%len(colors)])
                     j = j+1
+    def to_middle(self):
+        self.x0 = self.monitor_width/2
+        self.y0 = -self.monitor_height/2
