@@ -3,13 +3,19 @@ import cv2
 import dlib
 from pathlib import Path
 from imutils import face_utils
-
+import screeninfo
 
 
 
 path = '../predictors/shape_predictor_68_face_landmarks.dat' #path to shape_predictor
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(path)
+
+monitor = screeninfo.get_monitors()[0]
+monitor_height, monitor_width = monitor.height,monitor.width
+x_parallax = monitor_width/2
+y_parallax = monitor_height/2
+scale = 2
 
 # data from web cam
 cap = cv2.VideoCapture(0)
@@ -30,7 +36,8 @@ while True:
         shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
 	    # create computer man 
-        man = Computer_Man()
+        
+        man = Computer_Man(x0=x_parallax,y0 = y_parallax, scale=scale)
         man.draw_man(bg,shape)
 
     # Show the image
