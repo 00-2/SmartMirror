@@ -18,16 +18,22 @@ predictor = dlib.shape_predictor(path)
 cap = cv2.VideoCapture(0)
 # we work with one person
 arr_of_mood = []
-max_length_arr_of_mood = 20
+max_length_arr_of_mood = 200
 # message of staying in vision
 message = 'please stay in my field of vision'
-message_length = len(message)
 
 frame = Frame()
 man = Computer_Man()
 percentage_of_success = Text_On_Frame()
-
 classify = MiniXceptionFER()
+
+# set size of bar and message, which use while we collect emoji
+# only x coord
+percentage_of_success.length_of_message = percentage_of_success.length_of_text(message)[0][0]
+
+current_length_percentage_bar = 0
+max_length_percentage_bar = percentage_of_success.get_length_of_percentage_bar()
+count_of_moods_for_one_symbol = max_length_arr_of_mood/max_length_percentage_bar
 
 # i - for get mood each 10 frames
 i = 0
@@ -47,18 +53,20 @@ while len(arr_of_mood)<max_length_arr_of_mood:
         shape = predictor(gray, rect)
         shape = face_utils.shape_to_np(shape)
 	    # create computer man 
+        man.to_middle()
         man.draw_man(bg,shape)
 
-    # success percentage 
+    # success percentage
     percentage_of_success.put(bg,message)
-    current_status =  (1)
-    percentage_of_success.put(bg,("*"*current_status) + ">")
+    percentage_of_success.put(bg,("*"*(int)(len(arr_of_mood)/count_of_moods_for_one_symbol) + ">"))
     # add mood into array
     if i % 10 == 0:
         inference = classify(image)
         arr_of_mood.append(inference['class_name'])
     # next Frame
     i = (i+1)%10
+    
+    percentage_of_success.count_of_texts = 0
     # Show the image
     cv2.imshow("Output", bg)
     k = cv2.waitKey(5) & 0xFF
