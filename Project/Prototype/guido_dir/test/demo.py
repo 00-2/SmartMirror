@@ -8,9 +8,21 @@ import sys
 from paz.pipelines import MiniXceptionFER
 
 sys.path.append('/home/x00/repos/SmartMirror/Project/Prototype/guido_dir')
+from text_on_frame import Text_On_Frame
 from computer_man import Computer_Man
 
+message = 'please stay in my field of vision'
+percentage_of_success = Text_On_Frame()
+
+percentage_of_success.length_of_message = percentage_of_success.length_of_text(message)[0][0]
+
+current_length_percentage_bar = 0
+max_length_arr_of_mood = 200
+max_length_percentage_bar = percentage_of_success.get_length_of_percentage_bar()
+count_of_moods_for_one_symbol = max_length_arr_of_mood/max_length_percentage_bar
+
 class VideoStreamWidget(object):
+    
     
 
     path = '../predictors/shape_predictor_68_face_landmarks.dat' #path to shape_predictor
@@ -33,14 +45,14 @@ class VideoStreamWidget(object):
         self.thread_get_mood.start()
     
     def get_mood(self):
-        while len(self.arr_of_moods)<100:
+        while len(self.arr_of_moods)<max_length_arr_of_mood:
             try:
                 frame = self.frame
                 inference = self.classify(frame)
                 self.arr_of_moods.append(inference['class_name'])
             except AttributeError:
                 pass
-            print(self.arr_of_moods)
+            time.sleep(0.02)
 
     def update(self):
         # Read the next frame from the stream in a different thread
@@ -62,6 +74,9 @@ class VideoStreamWidget(object):
 	        # create computer man 
             self.man.to_middle()
             self.man.draw_man(bg,shape)
+        percentage_of_success.put(bg,message)
+        percentage_of_success.put(bg,("*"*(int)(len(self.arr_of_moods)/count_of_moods_for_one_symbol) + ">"))
+        percentage_of_success.count_of_texts = 0
         cv2.imshow('frame', bg)
         key = cv2.waitKey(1)
         if key == ord('q'):
