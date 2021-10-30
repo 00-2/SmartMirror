@@ -25,7 +25,7 @@ class VideoStreamWidget(object):
     
     
 
-    path = '../predictors/shape_predictor_68_face_landmarks.dat' #path to shape_predictor
+    path = '/home/x00/repos/SmartMirror/Project/Prototype/predictors/shape_predictor_68_face_landmarks.dat' #path to shape_predictor
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(path)
     arr_of_moods = []
@@ -61,7 +61,7 @@ class VideoStreamWidget(object):
                 (self.status, self.frame) = self.capture.read()
 
     def show_frame(self):
-        bg = cv2.imread("../add_data_dir/background_black.jpg")
+        bg = cv2.imread("/home/x00/repos/SmartMirror/Project/Prototype/add_data_dir/background_black.jpg")
         # Display frames in main program
         gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
         # Get faces into webcam's image

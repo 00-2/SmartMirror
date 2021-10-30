@@ -55,7 +55,6 @@ class Computer_Man(Frame):
         x_to_zero,y_tmp = shape[0]
         x_tmp, y_to_zero = shape[8]
         parallax_to_zero = numpy.array([x_to_zero,y_to_zero-self.monitor_height],dtype=numpy.int32)
-        
         # parallax from x0, y0
         parallax = numpy.array([self.x0,self.y0],dtype=numpy.int32)
         for point in self.graph:            
