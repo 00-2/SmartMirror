@@ -38,3 +38,9 @@
     ![makeAHolder](Images/Realization(Makeholder).jpg)
     ## Result with holder(The brightness is so damn bad, will fix it)
     ![makeAHolder](Images/Realization(ResultWithHolder).jpg)
+
+
+
+- 31.10.21
+    add an option (FAX)
+    ![fax_without_writer](Images/Components(Fax).mp4)
