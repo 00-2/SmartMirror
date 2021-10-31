@@ -43,4 +43,4 @@
 
 - 31.10.21
     add an option (FAX)
-    ![fax_without_writer](Images/Components(FAX).mp4)
+    ![fax_without_writer](Images/Components(FAX).gif)
